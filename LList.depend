@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1548870570 source:c:\users\richi\documents\fmi\sdp\llist\main.cpp
+	<iostream>
+	"LList.h"
+
+1543230026 c:\users\richi\documents\fmi\sdp\llist\include\llist.h
+	<iostream>
+
+1548870585 source:c:\users\richi\documents\fmi\sdp\llist\src\llist.cpp
+	"LList.h"
+	<iostream>
+	<cstdlib>
+	<cassert>
+
+1548870570 source:c:\users\richi\documents\fmi\sdp\llist\src\graph.cpp
+
+1548870153 c:\users\richi\documents\fmi\sdp\llist\include\graph.h
+	"LList.h"
+
