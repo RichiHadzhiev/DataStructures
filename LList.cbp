@@ -34,8 +34,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Graph.h" />
 		<Unit filename="include/LList.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Graph.cpp" />
 		<Unit filename="src/LList.cpp" />
 		<Extensions>
 			<code_completion />

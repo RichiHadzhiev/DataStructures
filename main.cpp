@@ -86,7 +86,7 @@ LList<T> mergeLists(LList<T> l1, LList<T> l2)
 }
 
 int main()
-{
+{/*
     LList<int> ll;
     ll.toEnd(2);
     ll.toEnd(1);
@@ -111,6 +111,7 @@ int main()
     int x;
     ll.deleteAfter(ll.iter(),x);
     cout<<x;*/
+    /*
     LList<int> newll;
     sortList(ll, newll);
     //newll.print();
@@ -122,6 +123,6 @@ int main()
     LList<int> newll2;
     sortList(ll2, newll2);
     //newll2.print();
-    //mergeLists(newll, newll2).print();
+    //mergeLists(newll, newll2).print();*/
     return 0;
 }
