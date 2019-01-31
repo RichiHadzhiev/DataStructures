@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cassert>
+#include <queue>
 using namespace std;
 
 template <typename T = int>
@@ -399,7 +400,7 @@ LList<T> Graph<T>::vertexes()
     {
         p->inf.iterStart();
         elem_link1<T> *q = p->inf.iter();
-        ll.toEnd(q);
+        ll.toEnd(q->inf);
         p = p->link;
     }
     return ll;
@@ -418,6 +419,101 @@ void Graph<T>::print()
     cout<<endl;
 }
 
+template <typename T>
+void create_graph(Graph<T>& g)
+{
+    char c;
+    do
+    {
+        cout<<"Add top:\n";
+        T x;
+        cin>>x;
+        g.addTop(x);
+        cout<<"One more y/n?\n";
+        cin>>c;
+    } while(c == 'y');
+    cout<<"Ribs:\n";
+    do
+    {
+        cout<<"Start top: ";
+        T x;
+        cin>>x;
+        cout<<"End top: ";
+        T y;
+        cin>>y;
+        g.addRib(x, y);
+        cout<<"One more y/n?\n";
+        cin>>c;
+    } while(c == 'y');
+}
+
+template <typename T>
+bool member(const T& a, LList<T>& l)
+{
+    l.iterStart();
+    elem_link1<T> *p = l.iter();
+    while(p && p->inf != a)
+        p = p->link;
+    return p!=NULL;
+}
+
+template <typename T>
+void BFS(const T& a, Graph<T>& g, LList<T>& l)
+{
+    queue<int> q;
+    q.push(a);
+    l.toEnd(a);
+    while(!q.empty())
+    {
+        T x = q.front();
+        q.pop();
+        cout<<x<<" ";
+        elem_link1<T>* p = g.point(x);
+        p = p->link;
+        while(p)
+        {
+            if(!member(p->inf, l))
+            {
+                q.push(p->inf);
+                l.toEnd(p->inf);
+            }
+            p = p->link;
+        }
+    }
+}
+
+template <typename T>
+LList<T> differenceSets(LList<T>& l1, LList<T>& l2)
+{
+    LList<T> dif;
+    l1.iterStart();
+    l2.iterStart();
+    elem_link1<T> *iter1 = l1.iter();
+    elem_link1<T> *iter2 = l2.iter();
+    while(iter1)
+    {
+        if(!member(iter1->inf, l2))
+            dif.toEnd(iter1->inf);
+        iter1 = iter1->link;
+    }
+    return dif;
+}
+
+template <typename T>
+void full_BFS(Graph<T>& g)
+{
+    LList<T> v = g.vertexes(),
+                 l,
+                 h = v;
+    while(!h.empty())
+    {
+        h.iterStart();
+        elem_link1<T> *p = h.iter();
+        BFS(p->inf, g, l);
+        h = differenceSets(v, l);
+    }
+}
+
 int main()
 {
     LList<int> a;
@@ -429,8 +525,23 @@ int main()
     g.addTop(3);
     g.addTop(4);
     g.addTop(2);
-    g.addRib(3,4);
+    g.addTop(1);
+    g.addRib(1,4);
     g.addRib(4,2);
-    //g.addRib(2,3);
-    g.print();
+    g.addRib(2,1);
+    g.addRib(3,1);
+    g.addRib(3,4);
+    /*
+    cout<<"Creating your own graph\n";
+    Graph<int> g1;
+    create_graph(g1);
+    g1.print();
+    cout<<"Now the BFS\n";
+    LList<int> b;
+    int vertex;
+    cout<<"Choose vertex to start from: ";
+    cin>>vertex;
+    BFS(vertex, g1, b);
+    */
+    full_BFS(g);
 }
