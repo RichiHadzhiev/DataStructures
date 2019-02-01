@@ -602,7 +602,37 @@ void allways(const T& a, const T& b, Graph<T>& g, LList<T>& l)
     }
 }
 
-
+//bool flag = false;
+int minlen = 5;
+template <typename T>
+void minway(const T& a, const T& b, Graph<T>& g, LList<T>& l, LList<T>& minPath)
+{
+    l.toEnd(a);
+    if(a == b)
+    {
+        flag = true;
+        int len = l.length();
+        if(len < minlen)
+        {
+            minlen = len;
+            minPath = l;
+        }
+    }
+    else
+    {
+        elem_link1<T> *p = g.point(a);
+        p = p->link;
+        while(p)
+        {
+            if(!member(p->inf, l))
+            {
+                minway(p->inf, b, g, l, minPath);
+                deleteLast(l);
+            }
+            p = p->link;
+        }
+    }
+}
 
 int main()
 {
@@ -653,6 +683,7 @@ int main()
     int x; cout<<"x="; cin>>x;
     int y; cout<<"y="; cin>>y;
     LList<int> c;
+    LList<int> minPath;
     /*
     if(way(x, y, g, c))
     {
@@ -661,5 +692,8 @@ int main()
     }
     else cout<<"There is NO way between "<<x<<" and "<<y<<".\n";
     */
-    allways(x, y, g, c);
+
+    //allways(x, y, g, c);
+    minway(x, y, g, c, minPath);
+    minPath.print();
 }
