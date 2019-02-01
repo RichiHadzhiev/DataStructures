@@ -514,34 +514,72 @@ void full_BFS(Graph<T>& g)
     }
 }
 
+template <typename T>
+void DFS(const T& a, Graph<T>& g, LList<T>& l)
+{
+    l.toEnd(a);
+    cout<<a<<" ";
+    elem_link1<T> *p = g.point(a);
+    p = p->link;
+    while(p)
+    {
+        if(!member(p->inf, l))
+            DFS(p->inf, g, l);
+        p = p->link;
+    }
+}
+
+template <typename T>
+void full_DFS(Graph<T>& g)
+{
+    LList<T> v = g.vertexes(),
+                l,
+                h = v;
+    while(!h.empty())
+    {
+        h.iterStart();
+        elem_link1<T> *p = h.iter();
+        DFS(p->inf, g, l);
+        h = differenceSets(v, l);
+    }
+}
+
 int main()
 {
+    /*
     LList<int> a;
     a.toEnd(3);
     a.toEnd(4);
     a.toEnd(2);
     a.print();
+    */
     Graph<int> g;
-    g.addTop(3);
+    g.addTop(1);
     g.addTop(4);
     g.addTop(2);
-    g.addTop(1);
+    g.addTop(3);
     g.addRib(1,4);
     g.addRib(4,2);
     g.addRib(2,1);
     g.addRib(3,1);
     g.addRib(3,4);
-    /*
+
     cout<<"Creating your own graph\n";
     Graph<int> g1;
     create_graph(g1);
     g1.print();
-    cout<<"Now the BFS\n";
+    //cout<<"Now the BFS\n";
+    //LList<int> b;
+    //int vertex;
+    //cout<<"Choose vertex to start from: ";
+    //cin>>vertex;
+    //BFS(vertex, g1, b);
+    cout<<"Now the DFS\n";
     LList<int> b;
     int vertex;
     cout<<"Choose vertex to start from: ";
     cin>>vertex;
-    BFS(vertex, g1, b);
-    */
-    full_BFS(g);
+    DFS(vertex, g1, b);
+    cout<<"Now the full DFS\n";
+    full_DFS(g1);
 }
