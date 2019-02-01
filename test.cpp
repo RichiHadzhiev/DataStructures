@@ -576,6 +576,34 @@ void deleteLast(LList<T>& l)
     l.deleteElem(p, x);
 }
 
+bool flag = false;
+template <typename T>
+void allways(const T& a, const T& b, Graph<T>& g, LList<T>& l)
+{
+    l.toEnd(a);
+    if(a == b)
+    {
+        flag = true;
+        l.print();
+    }
+    else
+    {
+        elem_link1<T> *p = g.point(a);
+        p = p->link;
+        while(p)
+        {
+            if(!member(p->inf, l))
+            {
+                allways(p->inf, b, g, l);
+                deleteLast(l);
+            }
+            p = p->link;
+        }
+    }
+}
+
+
+
 int main()
 {
     /*
@@ -620,11 +648,12 @@ int main()
     full_DFS(g);
     cout<<endl;
     */
-    /*
+
     cout<<"Insert 2 vertices to check if there is a way\n";
     int x; cout<<"x="; cin>>x;
     int y; cout<<"y="; cin>>y;
     LList<int> c;
+    /*
     if(way(x, y, g, c))
     {
         cout<<"There is a way between "<<x<<" and "<<y<<" and it is the following:\n";
@@ -632,5 +661,5 @@ int main()
     }
     else cout<<"There is NO way between "<<x<<" and "<<y<<".\n";
     */
-
+    allways(x, y, g, c);
 }
