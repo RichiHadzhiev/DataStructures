@@ -544,6 +544,38 @@ void full_DFS(Graph<T>& g)
     }
 }
 
+template <typename T>
+bool way(const T& a, const T& b, Graph<T>& g, LList<T>& l)
+{
+    l.toEnd(a);
+    if(a == b)
+        return true;
+    elem_link1<T> *p = g.point(a);
+    p = p->link;
+    while(p)
+    {
+        if(!member(p->inf, l))
+        {
+            if(way(p->inf, b, g, l)) return true;
+            deleteLast(l);
+        }
+        p = p->link;
+    }
+}
+
+template <typename T>
+void deleteLast(LList<T>& l)
+{
+    l.iterStart();
+    T x;
+    elem_link1<T> *p = l.iter();
+    while(p->link)
+    {
+        p = p->link;
+    }
+    l.deleteElem(p, x);
+}
+
 int main()
 {
     /*
@@ -564,22 +596,41 @@ int main()
     g.addRib(3,1);
     g.addRib(3,4);
 
-    cout<<"Creating your own graph\n";
-    Graph<int> g1;
-    create_graph(g1);
-    g1.print();
+    //cout<<"Creating your own graph\n";
+    //Graph<int> g1;
+    //create_graph(g1);
+    //g1.print();
+
     //cout<<"Now the BFS\n";
     //LList<int> b;
     //int vertex;
     //cout<<"Choose vertex to start from: ";
     //cin>>vertex;
     //BFS(vertex, g1, b);
+
+    /*
     cout<<"Now the DFS\n";
     LList<int> b;
     int vertex;
     cout<<"Choose vertex to start from: ";
     cin>>vertex;
-    DFS(vertex, g1, b);
+    DFS(vertex, g, b);
+    cout<<endl;
     cout<<"Now the full DFS\n";
-    full_DFS(g1);
+    full_DFS(g);
+    cout<<endl;
+    */
+    /*
+    cout<<"Insert 2 vertices to check if there is a way\n";
+    int x; cout<<"x="; cin>>x;
+    int y; cout<<"y="; cin>>y;
+    LList<int> c;
+    if(way(x, y, g, c))
+    {
+        cout<<"There is a way between "<<x<<" and "<<y<<" and it is the following:\n";
+        c.print();
+    }
+    else cout<<"There is NO way between "<<x<<" and "<<y<<".\n";
+    */
+
 }
