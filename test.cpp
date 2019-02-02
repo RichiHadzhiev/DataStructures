@@ -634,6 +634,38 @@ void minway(const T& a, const T& b, Graph<T>& g, LList<T>& l, LList<T>& minPath)
     }
 }
 
+//Problem 3, Variant 2, 2015
+template <typename T>
+bool pathN(int n, Graph<T>& g, int length)
+{
+    if(length == 0)
+        return true;
+    elem_link1<T> *p = g.point(n);
+    p = p->link;
+    while(p)
+    {
+        if(!member(p->inf, l))
+        {
+            if(pathN(p->inf, g, --length)) return true;
+            deleteLast(l);
+        }
+        p = p->link;
+    }
+}
+/*
+//Problem 3, Variant 1, 2015
+template <typename T>
+int maxTwoWayFrom(int n, Graph<T>& g, int length)
+{
+    elem_link1<T> *p = g.point(n);
+    int maxLength = 1;
+    p = p->link;
+    while(p && p->inf != n)
+    {
+
+    }
+}
+*/
 int main()
 {
     /*
@@ -645,14 +677,31 @@ int main()
     */
     Graph<int> g;
     g.addTop(1);
-    g.addTop(4);
     g.addTop(2);
     g.addTop(3);
-    g.addRib(1,4);
-    g.addRib(4,2);
-    g.addRib(2,1);
-    g.addRib(3,1);
-    g.addRib(3,4);
+    g.addTop(4);
+    g.addTop(5);
+    g.addTop(6);
+    g.addTop(7);
+    g.addTop(8);
+    g.addTop(9);
+    g.addTop(10);
+    g.addTop(11);
+    g.addTop(12);
+    g.addRib(1,2);
+    g.addRib(2,3);
+    g.addRib(2,4);
+    g.addRib(2,5);
+    g.addRib(3,6);
+    g.addRib(4,7);
+    g.addRib(5,8);
+    g.addRib(5,9);
+    g.addRib(6,7);
+    g.addRib(6,10);
+    g.addRib(6,11);
+    g.addRib(7,8);
+    g.addRib(10,11);
+    g.addRib(11,12);
 
     //cout<<"Creating your own graph\n";
     //Graph<int> g1;
@@ -679,11 +728,14 @@ int main()
     cout<<endl;
     */
 
+    /*
     cout<<"Insert 2 vertices to check if there is a way\n";
     int x; cout<<"x="; cin>>x;
     int y; cout<<"y="; cin>>y;
     LList<int> c;
     LList<int> minPath;
+    */
+
     /*
     if(way(x, y, g, c))
     {
@@ -694,6 +746,9 @@ int main()
     */
 
     //allways(x, y, g, c);
-    minway(x, y, g, c, minPath);
-    minPath.print();
+
+    //minway(x, y, g, c, minPath);
+    //minPath.print();
+
+    cout<<pathN(6, g, 3);
 }
